@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEWS & VIEWS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .header {
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+        }
+        .header img {
+            max-width: 100px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .nav {
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+            background-color: #fff;
+            border-bottom: 1px solid #ccc;
+        }
+        .nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+        }
+        .headline-banner {
+            width: 100%;
+            overflow: hidden;
+            background-color: #333;
+            color: #fff;
+            position: relative;
+            white-space: nowrap;
+        }
+        .headline-banner p {
+            display: inline-block;
+            padding: 10px 0;
+            animation: scroll 10s linear infinite;
+        }
+        .cbanner {
+            width: 100%;
+            overflow: hidden;
+            background-color: #3a0be7;
+            color: #fff;
+            position: relative;
+            white-space: nowrap;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .cbanner a {
+            display: inline-block;
+            padding: 10px 0;
+            text-align: center;
+            margin: 3px;
+            padding: 10px;
+            border: #f4f4f4 solid 1px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+
+        }
+   
+        @keyframes scroll {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+        .post {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: flex;
+            align-items: flex-start;
+        }
+        .post img {
+            max-width: 200px;
+            margin-right: 20px;
+            border-radius: 5px;
+        }
+        .post .text {
+            flex: 1;
+        }
+        .post h2 {
+            margin-top: 0;
+        }
+        .post p {
+            color: #666;
+        }
+        .post .meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #999;
+        }
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="logo.png" alt="N360 Logo">
+        <h1>NEWS & VIEWS</h1>
+    </div>
+    <div class="nav">
+        <a href="#">HOME</a>
+        <a href="#">ABOUT</a>
+        <a href="#">CONTACT US </a>
+        
+    </div>
+    <div class="cbanner categories">
+        <a href="">NEWS</a>
+        <a href="">ENTERTAINMENT</a>
+        <a href="">LIFESTYLE</a>
+        <a href="">SPORTS</a>
+        <a href="">POLITICS</a>
+        <a href="">TECHNOLOGY</a>
+        <a href="">EDITOR`S NOTE</a>
+    </div>
+    <div class="headline-banner">
+        <p> <STRONG>TOP STORIES:</STRONG> STORY 1 <span> | </span> STORY 2.<span> | </span> STORY 3.<span> | </span> STORY 4.<span> | </span> STORY 5.</p>
+    </div>
+ 
+    <div class="content">
+        <div class="post">
+            <img src="imgs/nature.jpg" alt="Example Image">
+            <div class="text">
+                <h2>Nature</h2>
+                <p>This image captures the serene beauty of nature. The lush greenery and the tranquil atmosphere make it a perfect escape from the hustle and bustle of city life. Nature has a way of calming our minds and rejuvenating our spirits.</p>
+                <div class="meta">
+                    <a href="#">Read More</a>
+                    <span>January 28, 2025</span> <br>
+                    <span>Written by: Amen</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>Copyright © All rights reserved. <a href="newsviews.co.zw"> News&Views.co.zw</a></p>
+        <h3> Written by Amen Anesu. </h3>
+    </div>
+</body>
+</html>
