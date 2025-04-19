@@ -231,8 +231,76 @@
     <div class="headline-banner">
         <p> <STRONG>TOP STORIES:</STRONG> STORY 1 <span> | </span> STORY 2.<span> | </span> STORY 3.<span> | </span> STORY 4.<span> | </span> STORY 5.</p>
     </div>
- 
+
+
+
+
+
+    <?php
+// Database connection
+$host = 'localhost';
+$username = 'root'; // Replace with your MySQL username
+$password = ''; // Replace with your MySQL password
+$dbname = 'news_blog';
+
+$conn = new mysqli($host, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch posts
+$sql = "SELECT * FROM posts ORDER BY date_posted DESC";
+$result = $conn->query($sql);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEWS & VIEWS</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+</head>
+<body>
     <div class="content">
+        <?php if ($result->num_rows > 0): ?>
+            <?php while ($row = $result->fetch_assoc()): ?>
+                <div class="post">
+                    <img src="<?php echo $row['image_url']; ?>" alt="Post Image">
+                    <div class="text">
+                        <h2><?php echo $row['title']; ?></h2>
+                        <p><?php echo $row['content']; ?></p>
+                        <div class="meta">
+                            <a href="#">Read More</a>
+                            <span><?php echo date('F d, Y', strtotime($row['date_posted'])); ?></span> <br>
+                            <span>Written by: <?php echo $row['author']; ?></span>
+                        </div>
+                    </div>
+                </div>
+            <?php endwhile; ?>
+        <?php else: ?>
+            <p>No posts available.</p>
+        <?php endif; ?>
+    </div>
+</body>
+</html>
+
+<?php
+$conn->close();
+?>
+
+
+
+
+
+
+
+
+
+ 
+    <!-- <div class="content">
         <div class="post">
             <img src="imgs/nature.jpg" alt="Example Image">
             <div class="text">
@@ -245,7 +313,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="footer">
         <p>Copyright © All rights reserved. <a href="newsviews.co.zw"> News&Views.co.zw</a></p>
         <h3> Written by Amen Anesu. </h3>

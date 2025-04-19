@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     } else {
         $error = 'Invalid username or password.';
+        echo "<script>alert('$error'); window.location.href='index.php';</script>";
     }
 }
 ?>
