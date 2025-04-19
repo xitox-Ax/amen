@@ -45,6 +45,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+        }
         body {
             font-family: Arial, sans-serif;
             background-color: #f9f9f9;
@@ -93,11 +97,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <div class="login-container">
+    <img src="imgs/logo1.png" alt="">
         <h1>Admin Login</h1>
         <?php if ($error): ?>
             <p class="error"><?php echo $error; ?></p>
         <?php endif; ?>
-        <form method="POST" action="">
+        <form method="POST" action="login_process.php">
             <input type="text" name="username" placeholder="Username" required>
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Login</button>
