@@ -91,7 +91,7 @@ if (!isset($_SESSION['admin'])) {
             }
 
             // Fetch posts from the database
-            $sql = "SELECT id, title, date_posted FROM posts";
+            $sql = "SELECT * FROM posts";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
@@ -99,6 +99,7 @@ if (!isset($_SESSION['admin'])) {
                 echo '<tr style="background-color: #004080; color: #fff;">';
                 echo '<th style="padding: 10px; text-align: left;">ID</th>';
                 echo '<th style="padding: 10px; text-align: left;">Title</th>';
+                echo '<th style="padding: 10px; text-align: left;">Content</th>';
                 echo '<th style="padding: 10px; text-align: left;">Dated</th>';
                 echo '<th style="padding: 10px; text-align: left;">Actions</th>';
                 echo '</tr>';
@@ -106,9 +107,10 @@ if (!isset($_SESSION['admin'])) {
                     echo '<tr style="background-color: #f9f9f9;">';
                     echo '<td style="padding: 10px; border: 1px solid #ddd;">' . $row['id'] . '</td>';
                     echo '<td style="padding: 10px; border: 1px solid #ddd;">' . htmlspecialchars($row['title']) . '</td>';
+                    echo '<td style="padding: 10px; border: 1px solid #ddd;">' . implode(' ', array_slice(explode(' ', htmlspecialchars($row['content'])), 0, 6)) . ' ...</td>';
                     echo '<td style="padding: 10px; border: 1px solid #ddd;">' . $row['date_posted'] . '</td>';
                     echo '<td style="padding: 10px; border: 1px solid #ddd;">';
-                    echo '<a href="javascript:void(0);" onclick="openEditModal(' . $row['id'] . ', \'' . htmlspecialchars($row['title'], ENT_QUOTES) . '\')" style="margin-right: 10px; color: #004080; text-decoration: none;">';
+                    echo '<a href="javascript:void(0);" onclick="openEditModal(' . $row['id'] . ', \'' . htmlspecialchars($row['title'], ENT_QUOTES) . '\', \'' . htmlspecialchars($row['content'], ENT_QUOTES) . '\', \'' . htmlspecialchars($row['image_url'], ENT_QUOTES) . '\', \'' . $row['date_posted'] . '\', \'' . htmlspecialchars($row['author'], ENT_QUOTES) . '\')" style="margin-right: 10px; color: #004080; text-decoration: none;">';
                     echo '<img src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" alt="Edit" style="width: 16px; height: 16px; vertical-align: middle;"> Edit</a>';
                     echo '<a href="javascript:void(0);" onclick="openDeleteModal(' . $row['id'] . ')" style="color: red; text-decoration: none;">';
                     echo '<img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="Delete" style="width: 16px; height: 16px; vertical-align: middle;"> Delete</a>';
@@ -185,15 +187,6 @@ if (!isset($_SESSION['admin'])) {
         }
     </style>
 
-
-
-
-
-
-
-
-
-
 <!-- Delete Post Modal -->
 <div id="deleteModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
     <div style="background: #fff; padding: 20px; border-radius: 8px; width: 300px; margin: 100px auto; text-align: center;">
@@ -208,52 +201,82 @@ if (!isset($_SESSION['admin'])) {
 <div id="editModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
     <div style="background: #fff; padding: 20px; border-radius: 8px; width: 400px; margin: 100px auto;">
         <h3>Edit Post</h3>
-        <form id="editForm" method="POST" action="">
-        <?php
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Database connection
-            $conn = new mysqli('localhost', 'root', '', 'news_blog');
+        <form id="editForm" method="POST" action="dashboard.php" enctype="multipart/form-data">
+            <?php
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editPost'])) {
+                // Database connection
+                $conn = new mysqli('localhost', 'root', '', 'news_blog');
 
-            // Check connection
-            if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
+                // Check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+
+                // Sanitize and update the post
+                $id = intval($_POST['id']);
+                $title = $conn->real_escape_string($_POST['title']);
+                $content = $conn->real_escape_string($_POST['content']);
+                $author = $conn->real_escape_string($_POST['author']);
+                $date_posted = $conn->real_escape_string($_POST['date_posted']);
+
+                // Handle file upload
+                $image_url = $_POST['existing_image']; // Default to existing image
+                if (isset($_FILES['image_file']) && $_FILES['image_file']['tmp_name'] != "") {
+                    $targetDir = "imgs/";
+                    $imageFileName = basename($_FILES["image_file"]["name"]);
+                    $targetFilePath = $targetDir . $imageFileName;
+                    $imageFileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
+
+                    // Validate file type
+                    if (in_array($imageFileType, ["jpg", "jpeg", "png", "gif"])) {
+                        if (move_uploaded_file($_FILES["image_file"]["tmp_name"], $targetFilePath)) {
+                            $image_url = $targetFilePath; // Update image URL
+                        }
+                    }
+                }
+
+                $sql = "UPDATE posts 
+                        SET title = '$title', content = '$content', image_url = '$image_url', date_posted = '$date_posted', author = '$author' 
+                        WHERE id = $id";
+
+                if ($conn->query($sql) === TRUE) {
+                    echo "<script>alert('Post updated successfully.');</script>";
+                    echo "<script>window.location.href='dashboard.php';</script>";
+                } else {
+                    echo "<p style='color: red;'>Error updating post: " . $conn->error . "</p>";
+                }
+
+                // Close connection
+                $conn->close();
             }
-
-            // Sanitize and update the post
-            $id = intval($_POST['id']);
-            $title = $conn->real_escape_string($_POST['title']);
-
-            $sql = "UPDATE posts SET title = '$title' WHERE id = $id";
-
-            if ($conn->query($sql) === TRUE) {
-            echo "<script>alert('Post updated successfully.');</script>";
-            echo "<script>window.location.href='dashboard.php';</script>";
-            } else {
-            echo "<p style='color: red;'>Error updating post: " . $conn->error . "</p>";
-            }
-
-            // Close connection
-            $conn->close();
-        }
-        ?>
+            ?>
             <input type="hidden" id="editPostId" name="id">
+            <input type="hidden" id="existingImage" name="existing_image">
             <div style="margin-bottom: 10px;">
                 <label for="editTitle">Title:</label>
-                <input type="text" id="editTitle" name="title" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                <input type="text" id="editTitle" name="title" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" required>
             </div>
-            <button type="submit" style="background-color: #004080; color: #fff; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Save</button>
+            <div style="margin-bottom: 10px;">
+                <label for="editContent">Content:</label>
+                <textarea id="editContent" name="content" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" rows="5" required></textarea>
+            </div>
+            <div style="margin-bottom: 10px;">
+                <label for="editImage">Upload New Image (optional):</label>
+                <input type="file" id="editImage" name="image_file" accept="image/*">
+            </div>
+            <div style="margin-bottom: 10px;">
+                <label for="editDatePosted">Date Posted:</label>
+                <input type="date" id="editDatePosted" name="date_posted" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" required>
+            </div>
+            <div style="margin-bottom: 10px;">
+                <label for="editAuthor">Author:</label>
+                <input type="text" id="editAuthor" name="author" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" required>
+            </div>
+            <button type="submit" name="editPost" style="background-color: #004080; color: #fff; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Save</button>
             <button type="button" id="cancelEdit" style="background-color: #ccc; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
         </form>
     </div>
 </div>
-
-
-
-
-
-
-
-
 
 <script>
     // Delete Modal
@@ -280,10 +303,18 @@ if (!isset($_SESSION['admin'])) {
     const cancelEdit = document.getElementById('cancelEdit');
     const editPostIdInput = document.getElementById('editPostId');
     const editTitleInput = document.getElementById('editTitle');
+    const editContentInput = document.getElementById('editContent');
+    const editImageInput = document.getElementById('existingImage');
+    const editDatePostedInput = document.getElementById('editDatePosted');
+    const editAuthorInput = document.getElementById('editAuthor');
 
-    function openEditModal(postId, postTitle) {
+    function openEditModal(postId, postTitle, postContent, postImage, postDate, postAuthor) {
         editPostIdInput.value = postId;
         editTitleInput.value = postTitle;
+        editContentInput.value = postContent;
+        editImageInput.value = postImage;
+        editDatePostedInput.value = postDate;
+        editAuthorInput.value = postAuthor;
         editModal.style.display = 'block';
     }
 
@@ -291,17 +322,9 @@ if (!isset($_SESSION['admin'])) {
         editModal.style.display = 'none';
     });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
+<footer style="text-align: center; margin-top: 20px; padding: 10px; background-color: #004080; color: #fff; border-radius: 8px;">
+        <p>&copy; <?php echo date('Y'); ?> News Blog Admin Panel. All Rights Reserved.</p>
+    </footer>
 </body>
+
 </html>

@@ -209,7 +209,6 @@
        <div class="logo" style="background-color: #f9f9f9; width: 100%; height: 50px; display: flex; justify-content: center; align-items: center;">
         <img src="logo.png" alt="N360 Logo" style="width: auto; height: 40px; background-color: #f5f5f5; border-radius: 30px;box-shadow: #111111 1px 1px 1px; margin: 10px;"> 
            <h1 style="margin: 0; color: #004080;">NEWS & VIEWS</h1>
-           
        </div>
         <!-- <h1>NEWS & VIEWS</h1> -->
     </div>
@@ -251,10 +250,6 @@ $conn = new mysqli($host, $username, $password, $dbname);
         <?php endif; ?>
     </div>
 
-
-
-
-
     <?php
 // Database connection
 $host = 'localhost';
@@ -287,7 +282,7 @@ $result = $conn->query($sql);
         <?php if ($result->num_rows > 0): ?>
             <?php while ($row = $result->fetch_assoc()): ?>
                 <div class="post" style="display: flex; flex-direction: column; align-items: center;">
-                    <img src="<?php echo $row['image_url']; ?>" alt="Post Image" style="max-width: 100%; border-radius: 5px;">
+                    <img src="<?php echo $row['image_url']; ?>" alt="" style="max-width: 100%; border-radius: 5px;">
                     <div class="text" style="text-align: center;">
                         <h2><?php echo $row['title']; ?></h2>
                         <p><?php echo $row['content']; ?></p>

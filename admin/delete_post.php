@@ -21,12 +21,26 @@ if (isset($_GET['id'])) {
     // Sanitize the post ID
     $postId = intval($_GET['id']);
 
+    // Retrieve the image URL of the post
+    $sql = "SELECT image_url FROM posts WHERE id = $postId";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $imagePath = $row['image_url'];
+
+        // Delete the image file if it exists
+        if (!empty($imagePath) && file_exists($imagePath)) {
+            unlink($imagePath); // Delete the file
+        }
+    }
+
     // Delete the post from the database
     $sql = "DELETE FROM posts WHERE id = $postId";
 
     if ($conn->query($sql) === TRUE) {
         // Redirect back to the dashboard with a success message
-        echo "<script>alert('Post deleted successfully'); window.location.href='dashboard.php';</script>";
+        echo "<script>alert('Post and associated image deleted successfully'); window.location.href='dashboard.php';</script>";
     } else {
         // Redirect back to the dashboard with an error message
         echo "<script>alert('Error deleting post: " . $conn->error . "'); window.location.href='dashboard.php';</script>";

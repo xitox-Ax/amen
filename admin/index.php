@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <div class="login-container">
-    <img src="imgs/logo1.png" alt="">
+    <img src="logo1.png" alt="Logo" style="width: 150px; margin-bottom: 4px;">
         <h1>Admin Login</h1>
         <?php if ($error): ?>
             <p class="error"><?php echo $error; ?></p>
