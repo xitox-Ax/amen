@@ -229,7 +229,26 @@
         <a href="">EDITOR`S NOTE</a>
     </div>
     <div class="headline-banner">
-        <p> <STRONG>TOP STORIES:</STRONG> STORY 1 <span> | </span> STORY 2.<span> | </span> STORY 3.<span> | </span> STORY 4.<span> | </span> STORY 5.</p>
+        <?php
+        // Fetch headlines from the database
+        $host = 'localhost';
+$username = 'root'; // Replace with your MySQL username
+$password = ''; // Replace with your MySQL password
+$dbname = 'news_blog';
+
+$conn = new mysqli($host, $username, $password, $dbname);
+        $headline_sql = "SELECT title FROM posts ORDER BY date_posted DESC LIMIT 5";
+        $headline_result = $conn->query($headline_sql);
+
+        if ($headline_result->num_rows > 0): ?>
+            <p><strong>TOP STORIES:</strong>
+                <?php while ($headline_row = $headline_result->fetch_assoc()): ?>
+                    <?php echo $headline_row['title']; ?><span> | </span>
+                <?php endwhile; ?>
+            </p>
+        <?php else: ?>
+            <p><strong>TOP STORIES:</strong> No headlines available.</p>
+        <?php endif; ?>
     </div>
 
 
@@ -290,30 +309,6 @@ $result = $conn->query($sql);
 <?php
 $conn->close();
 ?>
-
-
-
-
-
-
-
-
-
- 
-    <!-- <div class="content">
-        <div class="post">
-            <img src="imgs/nature.jpg" alt="Example Image">
-            <div class="text">
-                <h2>Nature</h2>
-                <p>This image captures the serene beauty of nature. The lush greenery and the tranquil atmosphere make it a perfect escape from the hustle and bustle of city life. Nature has a way of calming our minds and rejuvenating our spirits.</p>
-                <div class="meta">
-                    <a href="#">Read More</a>
-                    <span>January 28, 2025</span> <br>
-                    <span>Written by: Amen</span>
-                </div>
-            </div>
-        </div>
-    </div> -->
     <div class="footer">
         <p>Copyright © All rights reserved. <a href="newsviews.co.zw"> News&Views.co.zw</a></p>
         <h3> Written by Amen Anesu. </h3>
