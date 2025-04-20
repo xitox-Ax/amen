@@ -283,6 +283,7 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
 </head>
 <body>
+    <div class="content_wrapper" style="margin-top: 20px; display: flex; justify-content: center; align-items: center;">
     <div class="content">
         <?php if ($result->num_rows > 0): ?>
             <?php while ($row = $result->fetch_assoc()): ?>
@@ -302,6 +303,7 @@ $result = $conn->query($sql);
         <?php else: ?>
             <p>No posts available.</p>
         <?php endif; ?>
+    </div>
     </div>
 </body>
 </html>
