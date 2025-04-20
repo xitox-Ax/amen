@@ -108,9 +108,9 @@ if (!isset($_SESSION['admin'])) {
                     echo '<td style="padding: 10px; border: 1px solid #ddd;">' . htmlspecialchars($row['title']) . '</td>';
                     echo '<td style="padding: 10px; border: 1px solid #ddd;">' . $row['date_posted'] . '</td>';
                     echo '<td style="padding: 10px; border: 1px solid #ddd;">';
-                    echo '<a href="edit_post.php?id=' . $row['id'] . '" style="margin-right: 10px; color: #004080; text-decoration: none;">';
+                    echo '<a href="javascript:void(0);" onclick="openEditModal(' . $row['id'] . ', \'' . htmlspecialchars($row['title'], ENT_QUOTES) . '\')" style="margin-right: 10px; color: #004080; text-decoration: none;">';
                     echo '<img src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" alt="Edit" style="width: 16px; height: 16px; vertical-align: middle;"> Edit</a>';
-                    echo '<a href="delete_post.php?id=' . $row['id'] . '" style="color: red; text-decoration: none;" onclick="return confirm(\'Are you sure you want to delete this post?\');">';
+                    echo '<a href="javascript:void(0);" onclick="openDeleteModal(' . $row['id'] . ')" style="color: red; text-decoration: none;">';
                     echo '<img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="Delete" style="width: 16px; height: 16px; vertical-align: middle;"> Delete</a>';
                     echo '</td>';
                     echo '</tr>';
@@ -184,5 +184,124 @@ if (!isset($_SESSION['admin'])) {
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
     </style>
+
+
+
+
+
+
+
+
+
+
+<!-- Delete Post Modal -->
+<div id="deleteModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
+    <div style="background: #fff; padding: 20px; border-radius: 8px; width: 300px; margin: 100px auto; text-align: center;">
+        <h3>Confirm Delete</h3>
+        <p>Are you sure you want to delete this post?</p>
+        <button id="confirmDelete" style="background-color: red; color: #fff; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Delete</button>
+        <button id="cancelDelete" style="background-color: #ccc; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
+    </div>
+</div>
+
+<!-- Edit Post Modal -->
+<div id="editModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
+    <div style="background: #fff; padding: 20px; border-radius: 8px; width: 400px; margin: 100px auto;">
+        <h3>Edit Post</h3>
+        <form id="editForm" method="POST" action="">
+        <?php
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Database connection
+            $conn = new mysqli('localhost', 'root', '', 'news_blog');
+
+            // Check connection
+            if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+            }
+
+            // Sanitize and update the post
+            $id = intval($_POST['id']);
+            $title = $conn->real_escape_string($_POST['title']);
+
+            $sql = "UPDATE posts SET title = '$title' WHERE id = $id";
+
+            if ($conn->query($sql) === TRUE) {
+            echo "<script>alert('Post updated successfully.');</script>";
+            echo "<script>window.location.href='dashboard.php';</script>";
+            } else {
+            echo "<p style='color: red;'>Error updating post: " . $conn->error . "</p>";
+            }
+
+            // Close connection
+            $conn->close();
+        }
+        ?>
+            <input type="hidden" id="editPostId" name="id">
+            <div style="margin-bottom: 10px;">
+                <label for="editTitle">Title:</label>
+                <input type="text" id="editTitle" name="title" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+            <button type="submit" style="background-color: #004080; color: #fff; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Save</button>
+            <button type="button" id="cancelEdit" style="background-color: #ccc; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<script>
+    // Delete Modal
+    const deleteModal = document.getElementById('deleteModal');
+    const confirmDelete = document.getElementById('confirmDelete');
+    const cancelDelete = document.getElementById('cancelDelete');
+    let deletePostId = null;
+
+    function openDeleteModal(postId) {
+        deletePostId = postId;
+        deleteModal.style.display = 'block';
+    }
+
+    confirmDelete.addEventListener('click', () => {
+        window.location.href = `delete_post.php?id=${deletePostId}`;
+    });
+
+    cancelDelete.addEventListener('click', () => {
+        deleteModal.style.display = 'none';
+    });
+
+    // Edit Modal
+    const editModal = document.getElementById('editModal');
+    const cancelEdit = document.getElementById('cancelEdit');
+    const editPostIdInput = document.getElementById('editPostId');
+    const editTitleInput = document.getElementById('editTitle');
+
+    function openEditModal(postId, postTitle) {
+        editPostIdInput.value = postId;
+        editTitleInput.value = postTitle;
+        editModal.style.display = 'block';
+    }
+
+    cancelEdit.addEventListener('click', () => {
+        editModal.style.display = 'none';
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
