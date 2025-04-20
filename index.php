@@ -283,19 +283,18 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
 </head>
 <body>
-    <div class="content_wrapper" style="margin-top: 20px; display: flex; justify-content: center; align-items: center;">
-    <div class="content">
+    <div class="content" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 20px;">
         <?php if ($result->num_rows > 0): ?>
             <?php while ($row = $result->fetch_assoc()): ?>
-                <div class="post">
-                    <img src="<?php echo $row['image_url']; ?>" alt="Post Image">
-                    <div class="text">
+                <div class="post" style="display: flex; flex-direction: column; align-items: center;">
+                    <img src="<?php echo $row['image_url']; ?>" alt="Post Image" style="max-width: 100%; border-radius: 5px;">
+                    <div class="text" style="text-align: center;">
                         <h2><?php echo $row['title']; ?></h2>
                         <p><?php echo $row['content']; ?></p>
-                        <div class="meta">
-                            <a href="#">Read More</a>
-                            <span><?php echo date('F d, Y', strtotime($row['date_posted'])); ?></span> <br>
-                            <span>Written by: <?php echo $row['author']; ?></span>
+                        <div class="meta" style="margin-top: 10px; font-size: 14px; color: #999;">
+                            <a href="#" style="color: #004080; text-decoration: none;">Read More</a>
+                            <span style="display: block;"><?php echo date('F d, Y', strtotime($row['date_posted'])); ?></span>
+                            <span style="display: block;">Written by: <?php echo $row['author']; ?></span>
                         </div>
                     </div>
                 </div>
@@ -303,7 +302,6 @@ $result = $conn->query($sql);
         <?php else: ?>
             <p>No posts available.</p>
         <?php endif; ?>
-    </div>
     </div>
 </body>
 </html>
