@@ -204,7 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </div>
 
-    <footer style="text-align: center; margin-top: 20px; padding: 10px; background-color: #004080; color: #fff; border-radius: 8px;">
+    <footer style="text-align: center; margin-top: 20px; padding: 10px; background-color:rgba(55, 57, 59, 0.29); color: #fff; border-radius: 8px;">
         <p>&copy; <?php echo date('Y'); ?> News Blog Admin Panel. All Rights Reserved.</p>
     </footer>
 </body>

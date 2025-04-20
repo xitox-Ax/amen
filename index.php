@@ -9,15 +9,15 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9; /* Light neutral background */
-            color: #333; /* Dark text for readability */
+            background-color: #ECF0F1; /* Soft light gray background */
+            color: #2C3E50; /* Dark slate blue text */
         }
         .header {
-            background-color: #004080; /* Deep blue for a professional look */
+            background-color: #2C3E50; /* Deep slate blue for header */
             color: #fff; /* White text for contrast */
             padding: 20px;
             text-align: center;
-            border-bottom: 3px solid #ffcc00; /* Accent color for emphasis */
+            border-bottom: 3px solid #34495E; /* Steel blue accent */
         }
         .header img {
             max-width: 100px;
@@ -30,8 +30,8 @@
             display: flex;
             justify-content: center;
             padding: 10px 0;
-            background-color: #003366; /* Slightly darker blue for navigation */
-            border-bottom: 2px solid #ffcc00;
+            background-color: #34495E; /* Steel blue for navigation */
+            border-bottom: 2px solid #2C3E50; /* Deep slate blue accent */
         }
         .nav a {
             margin: 0 15px;
@@ -41,26 +41,27 @@
             font-weight: bold;
         }
         .nav a:hover {
-            color: #ffcc00; /* Highlight on hover */
+            color: #BDC3C7; /* Light gray for hover effect */
         }
         .headline-banner {
             width: 100%;
             overflow: hidden;
-            background-color: #ffcc00; /* Bright yellow for attention */
-            color: #333; /* Dark text for readability */
+            background-color: #34495E; /* Steel blue for attention */
+            color: #fff; /* White text */
             position: relative;
             white-space: nowrap;
             padding: 10px 0;
             font-weight: bold;
+            text-align: center;
         }
         .headline-banner p {
             display: inline-block;
-            animation: scroll 10s linear infinite;
+            animation: scroll 25s linear infinite;
         }
         .cbanner {
             width: 100%;
             overflow: hidden;
-            background-color: #004080; /* Deep blue for consistency */
+            background-color: #2C3E50; /* Deep slate blue for consistency */
             color: #fff;
             position: relative;
             white-space: nowrap;
@@ -71,16 +72,16 @@
             display: inline-block;
             margin: 3px;
             padding: 10px 15px;
-            border: 1px solid #ffcc00; /* Accent border */
+            border: 1px solid #34495E; /* Accent border */
             border-radius: 6px;
             text-decoration: none;
             font-weight: 600;
             color: #fff;
-            background-color: #003366; /* Slightly darker blue for buttons */
+            background-color: #5D6D7E; /* Muted blue-gray for buttons */
         }
         .cbanner a:hover {
-            background-color: #ffcc00; /* Highlight on hover */
-            color: #333;
+            background-color: #BDC3C7; /* Light gray for hover */
+            color: #2C3E50;
         }
         @keyframes scroll {
             0% {
@@ -95,11 +96,11 @@
             text-align: center;
         }
         .post {
-            background-color: #fff;
+            background-color: #fff; /* White background for posts */
             padding: 20px;
             margin: 20px auto;
             max-width: 600px;
-            border: 1px solid #ccc;
+            border: 1px solid #BDC3C7; /* Light gray border */
             border-radius: 5px;
             display: flex;
             align-items: flex-start;
@@ -115,36 +116,33 @@
         }
         .post h2 {
             margin-top: 0;
-            color: #004080; /* Deep blue for headings */
+            color: #2C3E50; /* Deep slate blue for headings */
         }
         .post p {
-            color: #666; /* Subtle gray for body text */
+            color: #2C3E50; /* Dark slate blue for body text */
         }
         .post .meta {
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
             font-size: 14px;
-            color: #999;
+            color: #7F8C8D; /* Subtle gray for meta text */
         }
         .post .meta a {
-            color: #004080; /* Link color */
+            color: #5D6D7E; /* Muted blue-gray for links */
             text-decoration: none;
         }
         .post .meta a:hover {
             text-decoration: underline;
         }
         .footer {
-            background-color: #003366; /* Dark blue for footer */
+            background-color: #2C3E50; /* Deep slate blue for footer */
             color: #fff;
             text-align: center;
             padding: 10px 0;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
         }
         .footer a {
-            color: #ffcc00; /* Accent color for links */
+            color: #BDC3C7; /* Light gray for links */
             text-decoration: none;
         }
         .footer a:hover {
@@ -206,26 +204,30 @@
 </head>
 <body>
     <div class="header">
-       <div class="logo" style="background-color: #f9f9f9; width: 100%; height: 50px; display: flex; justify-content: center; align-items: center;">
-        <img src="logo.png" alt="N360 Logo" style="width: auto; height: 40px; background-color: #f5f5f5; border-radius: 30px;box-shadow: #111111 1px 1px 1px; margin: 10px;"> 
-           <h1 style="margin: 0; color: #004080;">NEWS & VIEWS</h1>
-       </div>
-        <!-- <h1>NEWS & VIEWS</h1> -->
+        <h1>NEWS & VIEWS</h1>
     </div>
-    <div class="nav">
+    <div class="nav" style="width: 80%; align-items: center; margin: 0 auto; padding: 10px 0;border-radius: 15px; background-color: #34495E; border-bottom: 2px solid #2C3E50;">
         <a href="#">HOME</a>
         <a href="#">ABOUT</a>
-        <a href="#">CONTACT US </a>
-        
+        <a href="#">CONTACT US</a>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+       
+        <div style="margin-left: auto;" >
+       
+            <a href="admin/index.php"> <i class="fas fa-user" style="color: green; font-size: 16px; background-color: white; border-radius: 50%; padding: 5px;"></i>LOGIN</i></a>
+        </div>
+
+        </a>
+        </a>
     </div>
     <div class="cbanner categories">
-        <a href="">NEWS</a>
-        <a href="">ENTERTAINMENT</a>
-        <a href="">LIFESTYLE</a>
-        <a href="">SPORTS</a>
-        <a href="">POLITICS</a>
-        <a href="">TECHNOLOGY</a>
-        <a href="">EDITOR`S NOTE</a>
+        <a href="#">NEWS</a>
+        <a href="#">ENTERTAINMENT</a>
+        <a href="#">LIFESTYLE</a>
+        <a href="#">SPORTS</a>
+        <a href="#">POLITICS</a>
+        <a href="#">TECHNOLOGY</a>
+        <a href="#">EDITOR'S NOTE</a>
     </div>
     <div class="headline-banner">
         <?php
@@ -278,18 +280,18 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
 </head>
 <body>
-    <div class="content" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 20px;">
+       <div class="content" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 4fr)); gap: 20px; padding: 20px;">
         <?php if ($result->num_rows > 0): ?>
             <?php while ($row = $result->fetch_assoc()): ?>
-                <div class="post" style="display: flex; flex-direction: column; align-items: center;">
-                    <img src="<?php echo $row['image_url']; ?>" alt="" style="max-width: 100%; border-radius: 5px;">
-                    <div class="text" style="text-align: center;">
-                        <h2><?php echo $row['title']; ?></h2>
-                        <p><?php echo $row['content']; ?></p>
-                        <div class="meta" style="margin-top: 10px; font-size: 14px; color: #999;">
-                            <a href="#" style="color: #004080; text-decoration: none;">Read More</a>
-                            <span style="display: block;"><?php echo date('F d, Y', strtotime($row['date_posted'])); ?></span>
-                            <span style="display: block;">Written by: <?php echo $row['author']; ?></span>
+                <div class="post" style="display: flex; align-items: flex-start; background-color: #fff; border: 1px solid #BDC3C7; border-radius: 5px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); padding: 15px; gap: 15px;">
+                    <img src="<?php echo $row['image_url']; ?>" alt="" style="width: 120px; height: 120px; object-fit: cover; border-radius: 5px;">
+                    <div class="text" style="flex: 1;">
+                        <h2 style="margin: 0 0 10px; font-size: 18px; color: #2C3E50;"><?php echo $row['title']; ?></h2>
+                        <p style="margin: 0 0 10px; font-size: 14px; color: #2C3E50;"><?php echo $row['content']; ?></p>
+                        <div class="meta" style="font-size: 12px; color: #7F8C8D;">
+                            <a href="#" style="color: #004080; text-decoration: none; margin-right: 10px;">Read More</a>
+                            <span><?php echo date('F d, Y', strtotime($row['date_posted'])); ?></span>
+                            <span style="margin-left: 10px;">Written by: <?php echo $row['author']; ?></span>
                         </div>
                     </div>
                 </div>
@@ -305,8 +307,7 @@ $result = $conn->query($sql);
 $conn->close();
 ?>
     <div class="footer">
-        <p>Copyright © All rights reserved. <a href="newsviews.co.zw"> News&Views.co.zw</a></p>
-        <h3> Written by Amen Anesu. </h3>
+        <p>&copy; <?php echo date('Y'); ?> News & Views. All Rights Reserved. <a href="#">Privacy Policy</a></p>
     </div>
 </body>
 </html>

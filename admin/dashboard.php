@@ -58,8 +58,8 @@ if (!isset($_SESSION['admin'])) {
                 <li id="active"><a href="manage_posts.php" class="active-tab">Manage Posts</a></li>
                 <li><a href="create_post.php">Create New Post</a></li>
                 <li><a href="manage_users.php">Manage Users</a></li>
-                <li><a href="site_settings.php">Site Settings</a></li>
-                <li><a href="analytics.php">View Analytics</a></li>
+                <li><a href="">Site Settings</a></li>
+                <li><a href="">View Analytics</a></li>
             </ul>
             <style>
                 .active-tab {
@@ -79,7 +79,7 @@ if (!isset($_SESSION['admin'])) {
             <div style="display: flex; align-items: center; margin-top: 10px;">
                 <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User Icon" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
                 <p style="margin: 0;">Admin User</p>
-            </div>
+            </div> 
             <p>Use the options on the left to manage your blog.</p>
             <?php
             // Database connection
@@ -322,7 +322,7 @@ if (!isset($_SESSION['admin'])) {
         editModal.style.display = 'none';
     });
 </script>
-<footer style="text-align: center; margin-top: 20px; padding: 10px; background-color: #004080; color: #fff; border-radius: 8px;">
+<footer style="text-align: center; margin-top: 20px; padding: 10px; background-color:rgba(71, 74, 77, 0.37); color: #fff; border-radius: 8px;">
         <p>&copy; <?php echo date('Y'); ?> News Blog Admin Panel. All Rights Reserved.</p>
     </footer>
 </body>
