@@ -14,57 +14,45 @@
         }
         .header {
             background-color: #2C3E50; /* Deep slate blue for header */
-            color: #fff; /* White text for contrast */
+            color: #fff;
             padding: 20px;
             text-align: center;
-            border-bottom: 3px solid #34495E; /* Steel blue accent */
+            border-bottom: 3px solid #34495E;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
         .header img {
-            max-width: 100px;
-        }
-        .header h1 {
-            margin: 0;
-            font-size: 28px;
+            width: 250px;
+            height: 50px;
+            margin: 10px auto;
+            display: block;
         }
         .nav {
             display: flex;
             justify-content: center;
+            align-items: center;
+            width: 80%;
+            margin: 0 auto;
             padding: 10px 0;
-            background-color: #34495E; /* Steel blue for navigation */
-            border-bottom: 2px solid #2C3E50; /* Deep slate blue accent */
+            border-radius: 15px;
+            background-color: #34495E;
+            border-bottom: 2px solid #2C3E50;
         }
         .nav a {
             margin: 0 15px;
             text-decoration: none;
-            color: #fff; /* White text for contrast */
+            color: #fff;
             font-size: 16px;
             font-weight: bold;
         }
         .nav a:hover {
-            color: #BDC3C7; /* Light gray for hover effect */
-        }
-        .headline-banner {
-            width: 100%;
-            overflow: hidden;
-            background-color: #34495E; /* Steel blue for attention */
-            color: #fff; /* White text */
-            position: relative;
-            white-space: nowrap;
-            padding: 10px 0;
-            font-weight: bold;
-            text-align: center;
-        }
-        .headline-banner p {
-            display: inline-block;
-            animation: scroll 25s linear infinite;
+            color: #BDC3C7;
         }
         .cbanner {
             width: 100%;
-            overflow: hidden;
-            background-color: #2C3E50; /* Deep slate blue for consistency */
+            background-color: #2C3E50;
             color: #fff;
-            position: relative;
-            white-space: nowrap;
             text-align: center;
             padding: 10px 0;
         }
@@ -72,16 +60,29 @@
             display: inline-block;
             margin: 3px;
             padding: 10px 15px;
-            border: 1px solid #34495E; /* Accent border */
+            border: 1px solid #34495E;
             border-radius: 6px;
             text-decoration: none;
             font-weight: 600;
             color: #fff;
-            background-color: #5D6D7E; /* Muted blue-gray for buttons */
+            background-color: #5D6D7E;
         }
         .cbanner a:hover {
-            background-color: #BDC3C7; /* Light gray for hover */
+            background-color: #BDC3C7;
             color: #2C3E50;
+        }
+        .headline-banner {
+            width: 100%;
+            overflow: hidden;
+            background-color: #34495E;
+            color: #fff;
+            padding: 10px 0;
+            font-weight: bold;
+            text-align: center;
+        }
+        .headline-banner p {
+            display: inline-block;
+            animation: scroll 25s linear infinite;
         }
         @keyframes scroll {
             0% {
@@ -92,57 +93,59 @@
             }
         }
         .content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
             padding: 20px;
-            text-align: left;
         }
         .post {
-            background-color: #fff; /* White background for posts */
-            padding: 20px;
-            margin: 20px auto;
-            max-width: 600px;
-            border: 1px solid #BDC3C7; /* Light gray border */
+            background-color: #fff;
+            border: 1px solid #BDC3C7;
             border-radius: 5px;
-            display: flex;
-            align-items: flex-start;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            overflow: hidden; /* Ensure content wraps properly around the floated image */
         }
         .post img {
-            max-width: 200px;
-            margin-right: 20px;
+            width: 400px; /* Set the width to 400px */
+            height: auto; /* Maintain aspect ratio */
+            object-fit: cover;
             border-radius: 5px;
-        }
-        .post .text {
-            flex: 1;
+            margin: 0 15px 15px 0; /* Add margin to create spacing around the image */
+            float: left; /* Make the image float to the left */
         }
         .post h2 {
-            margin-top: 0;
-            color: #2C3E50; /* Deep slate blue for headings */
+            margin: 0 0 10px;
+            font-size: 18px;
+            color: #2C3E50;
         }
         .post p {
-            color: #2C3E50; /* Dark slate blue for body text */
+            margin: 0 0 10px;
+            font-size: 14px;
+            color: #2C3E50;
+            text-align: justify;
         }
         .post .meta {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-            font-size: 14px;
-            color: #7F8C8D; /* Subtle gray for meta text */
+            font-size: 12px;
+            color: #7F8C8D;
+            clear: both; /* Ensure meta information is displayed below the floated content */
         }
         .post .meta a {
-            color: #5D6D7E; /* Muted blue-gray for links */
+            color: #004080;
             text-decoration: none;
+            margin-right: 10px;
         }
         .post .meta a:hover {
             text-decoration: underline;
         }
         .footer {
-            background-color: #2C3E50; /* Deep slate blue for footer */
+            background-color: #2C3E50;
             color: #fff;
             text-align: center;
             padding: 10px 0;
         }
         .footer a {
-            color: #BDC3C7; /* Light gray for links */
+            color: #BDC3C7;
             text-decoration: none;
         }
         .footer a:hover {
@@ -179,7 +182,6 @@
                 font-size: 14px;
             }
         }
-
         @media (max-width: 480px) {
             .header h1 {
                 font-size: 20px;
@@ -204,20 +206,15 @@
 </head>
 <body>
     <div class="header">
-        <h1>NEWS & VIEWS</h1>
+        <img src="imgs/logo1.png" alt="Logo">
     </div>
-    <div class="nav" style="width: 80%; align-items: center; margin: 0 auto; padding: 10px 0;border-radius: 15px; background-color: #34495E; border-bottom: 2px solid #2C3E50;">
+    <div class="nav">
         <a href="#">HOME</a>
         <a href="#">ABOUT</a>
         <a href="#">CONTACT US</a>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-       
-        <div style="margin-left: auto;" >
-       
-            <a href="admin/index.php"> <i class="fas fa-user" style="color: green; font-size: 16px; background-color: white; border-radius: 50%; padding: 5px;"></i>LOGIN</i></a>
-        </div>
-
-        </a>
+        <a href="admin/index.php" style="margin-left: auto;">
+            <i class="fas fa-user" style="color: green; font-size: 16px; background-color: white; border-radius: 50%; padding: 5px;"></i> LOGIN
         </a>
     </div>
     <div class="cbanner categories">
@@ -231,13 +228,7 @@
     </div>
     <div class="headline-banner">
         <?php
-        // Fetch headlines from the database
-        $host = 'localhost';
-$username = 'root'; // Replace with your MySQL username
-$password = ''; // Replace with your MySQL password
-$dbname = 'news_blog';
-
-$conn = new mysqli($host, $username, $password, $dbname);
+        $conn = new mysqli('localhost', 'root', '', 'news_blog');
         $headline_sql = "SELECT title FROM posts ORDER BY date_posted DESC LIMIT 5";
         $headline_result = $conn->query($headline_sql);
 
@@ -251,62 +242,30 @@ $conn = new mysqli($host, $username, $password, $dbname);
             <p><strong>TOP STORIES:</strong> No headlines available.</p>
         <?php endif; ?>
     </div>
+    <div class="content">
+        <?php
+        $sql = "SELECT * FROM posts ORDER BY date_posted DESC";
+        $result = $conn->query($sql);
 
-    <?php
-// Database connection
-$host = 'localhost';
-$username = 'root'; // Replace with your MySQL username
-$password = ''; // Replace with your MySQL password
-$dbname = 'news_blog';
-
-$conn = new mysqli($host, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Fetch posts
-$sql = "SELECT * FROM posts ORDER BY date_posted DESC";
-$result = $conn->query($sql);
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEWS & VIEWS</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
-</head>
-<body>
-       <div class="content" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 4fr)); gap: 20px; padding: 20px;">
-        <?php if ($result->num_rows > 0): ?>
+        if ($result->num_rows > 0): ?>
             <?php while ($row = $result->fetch_assoc()): ?>
-                <div class="post" style="display: flex; align-items: flex-start; background-color: #fff; border: 1px solid #BDC3C7; border-radius: 5px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); padding: 15px; gap: 15px;">
-                    <img src="<?php echo $row['image_url']; ?>" alt="" style="width: 120px; height: 120px; object-fit: cover; border-radius: 5px;">
-                    <div class="text" style="flex: 1;">
-                        <h2 style="margin: 0 0 10px; font-size: 18px; color: #2C3E50;"><?php echo $row['title']; ?></h2>
-                        <p style="margin: 0 0 10px; font-size: 14px; color: #2C3E50; text-align:left"><?php echo $row['content']; ?></p>
-                        <div class="meta" style="font-size: 12px; color: #7F8C8D;">
-                            <a href="#" style="color: #004080; text-decoration: none; margin-right: 10px;">Read More</a>
-                            <span><?php echo date('F d, Y', strtotime($row['date_posted'])); ?></span>
-                            <span style="margin-left: 10px;">Written by: <?php echo $row['author']; ?></span>
-                        </div>
+                <div class="post">
+                    <h2><?php echo $row['title']; ?></h2>
+                    <img src="<?php echo $row['image_url']; ?>" alt="">
+                    <p><?php echo $row['content']; ?></p>
+                    <div class="meta">
+                        <a href="#">Read More</a>
+                        <span><?php echo date('F d, Y', strtotime($row['date_posted'])); ?></span>
+                        <span style="margin-left: 10px;">Written by: <?php echo $row['author']; ?></span>
                     </div>
                 </div>
             <?php endwhile; ?>
         <?php else: ?>
-            <p>No posts available.</p> 
+            <p>No posts available.</p>
             <a href="admin/index.php">Write a post</a>
         <?php endif; ?>
     </div>
-</body>
-</html>
-
-<?php
-$conn->close();
-?>
+    <?php $conn->close(); ?>
     <div class="footer">
         <p>&copy; <?php echo date('Y'); ?> News & Views. All Rights Reserved. <a href="#">Privacy Policy</a></p>
     </div>

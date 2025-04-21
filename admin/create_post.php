@@ -31,62 +31,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
 
-    // Check if the file is an actual image, if a file is uploaded
     if (isset($_FILES["image_file"]) && $_FILES["image_file"]["tmp_name"] != "") {
         $check = getimagesize($_FILES["image_file"]["tmp_name"]);
-        if ($check !== false) {
-            $uploadOk = 1;
-        } else {
+        if ($check === false) {
             echo "<script>alert('File is not an image.');</script>";
             $uploadOk = 0;
         }
     } else {
-        // No file uploaded, proceed without an image
-        $uploadOk = 1;
-        $targetFilePath = null; // Set image path to null
+        $targetFilePath = null; // No file uploaded
     }
 
-    // Check file size (limit to 9MB)
     if ($_FILES["image_file"]["size"] > 9000000) {
-        echo "<script>alert('Sorry, your file is too large.');</script>";
+        echo "<script>alert('File is too large.');</script>";
         $uploadOk = 0;
     }
 
-    // Allow certain file formats
     if (!empty($imageFileName) && !in_array($imageFileType, ["jpg", "png", "jpeg", "gif"])) {
-        echo "<script>alert('Sorry, only JPG, JPEG, PNG & GIF files are allowed.');</script>";
+        echo "<script>alert('Only JPG, JPEG, PNG & GIF files are allowed.');</script>";
         $uploadOk = 0;
     }
 
-    // Check if $uploadOk is set to 0 by an error
-    if ($uploadOk == 0) {
-        echo "<script>alert('Sorry, your file was not uploaded.');</script>";
-    } else {
-        // If no file is uploaded, set $targetFilePath to NULL
-        if (empty($imageFileName)) {
+    if ($uploadOk && !empty($imageFileName)) {
+        if (!move_uploaded_file($_FILES["image_file"]["tmp_name"], $targetFilePath)) {
+            echo "<script>alert('Error uploading file.');</script>";
             $targetFilePath = null;
-        } else {
-            // Try to upload the file
-            if (!move_uploaded_file($_FILES["image_file"]["tmp_name"], $targetFilePath)) {
-                echo "<script>alert('Sorry, there was an error uploading your file.');</script>";
-                $targetFilePath = null; // Proceed without an image
-            }
-        }
-
-        // Insert the post into the database
-        $sql = "INSERT INTO posts (title, content, image_url, date_posted, author) 
-                VALUES ('$title', '$content', " . ($targetFilePath ? "'" . substr($targetFilePath, 3) . "'" : "NULL") . ", '$date_posted', '$author')";
-
-        if ($conn->query($sql) === TRUE) {
-            // Show a success alert and redirect back to the dashboard
-            echo "<script>alert('Post created successfully!'); window.location.href = 'dashboard.php';</script>";
-        } else {
-            // Show an error message
-            echo "<script>alert('Error creating post: " . $conn->error . "');</script>";
         }
     }
 
-    // Close the database connection
+    $sql = "INSERT INTO posts (title, content, image_url, date_posted, author) 
+            VALUES ('$title', '$content', " . ($targetFilePath ? "'" . substr($targetFilePath, 3) . "'" : "NULL") . ", '$date_posted', '$author')";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "<script>alert('Post created successfully!'); window.location.href = 'dashboard.php';</script>";
+    } else {
+        echo "<script>alert('Error creating post: " . $conn->error . "');</script>";
+    }
+
     $conn->close();
 }
 ?>
@@ -106,46 +86,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f9;
-            margin: 0;
             padding: 20px;
         }
         .form-container {
-            max-width: 700px;
+            max-width: 600px; /* Reduced width */
             margin: 0 auto;
             background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
+            padding: 20px; /* Reduced padding */
+            border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         .form-container h1 {
             color: #004080;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px; /* Reduced margin */
+            font-size: 20px; /* Reduced font size */
         }
         .form-container label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px; /* Reduced margin */
             font-weight: bold;
             color: #333;
+            font-size: 14px; /* Reduced font size */
         }
         .form-container input, .form-container textarea, .form-container button {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 20px;
+            padding: 10px; /* Reduced padding */
+            margin-bottom: 15px; /* Reduced margin */
             border: 1px solid #ccc;
             border-radius: 5px;
-            font-size: 16px;
+            font-size: 14px; /* Reduced font size */
         }
         .form-container textarea {
             resize: vertical;
-            min-height: 120px;
+            min-height: 100px; /* Reduced height */
         }
         .form-container button {
             background-color: #004080;
             color: #fff;
             border: none;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px; /* Reduced font size */
         }
         .form-container button:hover {
             background-color: #003366;
@@ -158,30 +139,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             text-decoration: none;
             background-color: #ccc;
             color: #333;
-            padding: 10px 15px;
+            padding: 8px 12px; /* Reduced padding */
             border-radius: 5px;
-            font-size: 16px;
-            text-align: center;
+            font-size: 14px; /* Reduced font size */
         }
         .form-container .actions a:hover {
             background-color: #bbb;
-        }
-        .form-container img {
-            display: block;
-            margin: 0 auto 20px;
-            max-width: 100%;
-            height: auto;
         }
     </style>
 </head>
 <body>
     <div class="form-container">
-        <h1>Create New Post</h1>
-        <img src="logo1.png" alt="Logo" style="width: 200px; height: 50px; margin-bottom: 20px;">
-
-  <a href="dashboard.php" style="display: inline-flex; align-items: center; text-decoration: none; background-color: #004080; color: #fff; padding: 10px 15px; border-radius: 5px; font-size: 16px; text-align: center; margin: 4px"> Go Back</a>    
-  <hr> <br> 
+        <img src="logo1.png" alt="" style="width:200px; height:50px; margin-bottom: 20px;">
+        <h1>Create New Post</h1> 
+        <a href="dashboard.php" style="text-decoration: none; background-color: #004080; color: #fff; padding: 8px 12px; border-radius: 5px; font-size: 14px;">Go Back</a>
+        <br>
         <form method="POST" action="" enctype="multipart/form-data">
+        <br><hr>
             <label for="title">Title:</label>
             <input type="text" id="title" name="title" placeholder="Enter the post title" required>
 
@@ -204,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </div>
 
-    <footer style="text-align: center; margin-top: 20px; padding: 10px; background-color:rgba(55, 57, 59, 0.29); color: #fff; border-radius: 8px;">
+    <footer style="text-align: center; margin-top: 15px; padding: 8px; background-color: rgba(55, 57, 59, 0.29); color: #fff; border-radius: 8px; font-size: 12px;">
         <p>&copy; <?php echo date('Y'); ?> News Blog Admin Panel. All Rights Reserved.</p>
     </footer>
 </body>
