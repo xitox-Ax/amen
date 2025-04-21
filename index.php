@@ -93,7 +93,7 @@
         }
         .content {
             padding: 20px;
-            text-align: center;
+            text-align: left;
         }
         .post {
             background-color: #fff; /* White background for posts */
@@ -287,7 +287,7 @@ $result = $conn->query($sql);
                     <img src="<?php echo $row['image_url']; ?>" alt="" style="width: 120px; height: 120px; object-fit: cover; border-radius: 5px;">
                     <div class="text" style="flex: 1;">
                         <h2 style="margin: 0 0 10px; font-size: 18px; color: #2C3E50;"><?php echo $row['title']; ?></h2>
-                        <p style="margin: 0 0 10px; font-size: 14px; color: #2C3E50;"><?php echo $row['content']; ?></p>
+                        <p style="margin: 0 0 10px; font-size: 14px; color: #2C3E50; text-align:left"><?php echo $row['content']; ?></p>
                         <div class="meta" style="font-size: 12px; color: #7F8C8D;">
                             <a href="#" style="color: #004080; text-decoration: none; margin-right: 10px;">Read More</a>
                             <span><?php echo date('F d, Y', strtotime($row['date_posted'])); ?></span>
@@ -297,7 +297,8 @@ $result = $conn->query($sql);
                 </div>
             <?php endwhile; ?>
         <?php else: ?>
-            <p>No posts available.</p>
+            <p>No posts available.</p> 
+            <a href="admin/index.php">Write a post</a>
         <?php endif; ?>
     </div>
 </body>

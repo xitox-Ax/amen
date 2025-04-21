@@ -31,7 +31,7 @@ if (isset($_GET['delete_id'])) {
 // Handle adding a new admin
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_admin'])) {
     $username = $conn->real_escape_string($_POST['username']);
-    $password = password_hash($_POST['password'], PASSWORD_BCRYPT); // Secure password hashing
+    $password = md5($_POST['password']); // Using MD5 for password hashing
 
     $sql = "INSERT INTO admin (username, password) VALUES ('$username', '$password')";
 
